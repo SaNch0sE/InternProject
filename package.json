@@ -4,7 +4,7 @@
     "main": "./src/server/index.js",
     "scripts": {
         "start": "nodemon src/server/index.js",
-        "ctest": "node testProject.js"
+        "ctest": "node screenshots.js"
     },
     "dependencies": {
         "@hapi/joi": "17.1.0",
