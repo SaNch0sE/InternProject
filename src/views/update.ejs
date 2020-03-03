@@ -1,0 +1,14 @@
+<button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#update<%= id %>" aria-expanded="false" aria-controls="update">
+    update
+</button>
+<div class="collapse" id="update<%= id %>">
+    <form method="POST" action="http://localhost:3000/v1/users/update">
+        <input type="hidden" name="_csrf" value="<%= csrf %>" required>
+        <input name="id" type="text" id="id" value="<%= uid %>" hidden required>
+        <div class="form-group">
+        <label for="updateUser"></label>
+        <input name="fullName" type="text" class="form-control" id="updateUser" placeholder="Enter new fullname" required>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
