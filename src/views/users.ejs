@@ -12,11 +12,11 @@
       <tbody>
         <% users.forEach(el => {%>
             <tr>
-                <th scope="row"><%= id %></th>
-                <th><%= el.email %><br></th>
-                <th><%- include('update', { uid: el.id, id, csrf }); %></th>
-                <th><%= el.fullName %><br></th>
-                <th><%- include('delete', { uid: el.id, csrf }) %> </th>
+                <th class="id"><%= id %></th>
+                <th class="email"><%= el.email %></th>
+                <th class="upd-Button"><%- include('update', { uid: el.id, id, csrf }); %></th>
+                <th class="fullName"><%= el.fullName %></th>
+                <th class="del-Button"><%- include('delete', { uid: el.id, csrf }) %> </th>
             </tr>
             <% id++; %>
         <% }); %>
