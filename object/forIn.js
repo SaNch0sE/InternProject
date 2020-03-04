@@ -10,8 +10,9 @@ ColoredTriangle.prototype = triangle;
 const obj = new ColoredTriangle();
 
 for (const prop in obj) {
+    // eslint-disable-next-line no-prototype-builtins
     if (obj.hasOwnProperty(prop)) {
-        console.log(`obj.${prop} = ${obj[prop]}`);
+        console.log(`obj.${obj[prop]} = ${prop}`);
     }
 }
 

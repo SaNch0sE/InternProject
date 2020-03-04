@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
-function fibonacci() {
+function* fibonacci() {
     let [prev, curr] = [0, 1];
 
     while (true) {
@@ -10,10 +10,10 @@ function fibonacci() {
 }
 
 for (const n of fibonacci()) {
-    console.log(n);
-    if (n >= 500) {
+    if (n >= 1600) {
         break;
     }
+    console.log(n);
 }
 
 // expected output:
