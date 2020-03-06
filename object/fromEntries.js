@@ -12,9 +12,8 @@ Object.entries(object).forEach(([key, value]) => {
         same.push([key, value]);
     }
 });
-console.log(same);
 
-const obj = new WeakMap(same);
+const obj = Object.fromEntries(same);
 
 console.log(obj.yay + obj.k);
 // expected output: String 'yayk'
