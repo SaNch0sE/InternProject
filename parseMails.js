@@ -19,10 +19,14 @@ const connectOptions = {
 };
 
 const connections = mongoose.createConnection(MONGO_URI, connectOptions);
-const sch = new mongoose.Schema({ email: { type: String } });
+
 const emailsCollection = new mongoose.Schema(
     {
-        Mails: [sch],
+        Mails: [{
+            email: {
+                type: String,
+            },
+        }],
     },
     {
         collection: 'emails',
@@ -42,12 +46,10 @@ async function parseMails(uri) {
             return items.map((el) => ({ email: el.innerText }));
         });
         browser.close();
-        console.log('Results:');
-        console.log(Object.values(mails));
-        console.log('------------------------------------------------\n\n------------------------------------------------');
-        return JSON.parse(JSON.stringify(mails));
+        return mails;
     } catch (e) {
-        return e;
+        console.error(e);
+        return false;
     }
 }
 

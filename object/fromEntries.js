@@ -9,11 +9,12 @@ const same = [];
 
 Object.entries(object).forEach(([key, value]) => {
     if (key === value) {
-        same.pipe([key, value]);
+        same.push([key, value]);
     }
 });
+console.log(same);
 
-const obj = Object.fromEntries(new WeakMap(same));
+const obj = new WeakMap(same);
 
-console.log(obj.yay - obj.k);
+console.log(obj.yay + obj.k);
 // expected output: String 'yayk'

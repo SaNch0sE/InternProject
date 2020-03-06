@@ -48,7 +48,7 @@ async function CreateScreenshot() {
 function uploadImage() {
     unirest('POST', 'https://api.imgur.com/3/image')
         .headers({
-            Authorization: 'Client-ID /////6fb1b3666b',
+            Authorization: 'Client-ID #####6fb1b3666b',
         })
         .field('image', fs.readFileSync('screenshots/example.png').toString('base64'))
         .end((res) => {
