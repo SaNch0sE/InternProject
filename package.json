@@ -4,7 +4,7 @@
     "main": "./src/server/index.js",
     "scripts": {
         "start": "nodemon src/server/index.js",
-        "ctest": "node screenshots.js",
+        "screenshot": "node screenshots.js",
         "parse": "node parseMails.js"
     },
     "dependencies": {

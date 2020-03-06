@@ -36,6 +36,8 @@ const Screenshots = new Schema(
     },
 );
 const model = connections.model('Screenshots', Screenshots);
+// Config done
+
 async function CreateScreenshot() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -46,23 +48,36 @@ async function CreateScreenshot() {
 }
 
 function uploadImage() {
-    unirest('POST', 'https://api.imgur.com/3/image')
-        .headers({
-            Authorization: 'Client-ID #####6fb1b3666b',
-        })
-        .field('image', fs.readFileSync('screenshots/example.png').toString('base64'))
-        .end((res) => {
-            if (res.error) throw new Error(res.error);
-            model.create({ Link: res.body.data.link });
-            return model.find({}).exec((err, resp) => {
-                if (err) {
-                    console.error(err);
-                    return process.exit(1);
+    return new Promise((resolve, reject) => {
+        unirest('POST', 'https://api.imgur.com/3/image')
+            .headers({
+                Authorization: 'Client-ID #####6fb1b3666b',
+            })
+            .field('image', fs.readFileSync('screenshots/example.png').toString('base64'))
+            .end((res) => {
+                if (res.error) {
+                    reject(res.error);
+                    return;
                 }
-                console.log(JSON.stringify(resp, null, '\t'));
-                return process.exit();
+                model.create({ Link: res.body.data.link }, (err, resp) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    console.log(resp);
+                });
+                model.find({}).exec((err, resp) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve(JSON.stringify(resp, null, '\t'));
+                });
             });
-        });
+    });
 }
 
-CreateScreenshot().then(uploadImage());
+CreateScreenshot().then(uploadImage().then((res) => {
+    console.log(res);
+    process.exit();
+}));
