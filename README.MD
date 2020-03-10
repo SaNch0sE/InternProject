@@ -1,3 +1,5 @@
-1. Save List of emails to MondoDB collection ‘GrabbingEmails’
+1. Positive and negative integration testing
 
-2. Create screenshot from users table and  upload to google drive Save public link to file in collection ‘Screenshots’
+2. Auth JWT
+
+3. Auth Passport Local Strategy

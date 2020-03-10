@@ -1,4 +1,5 @@
 const UserModel = require('./model');
+
 /**
  * @exports
  * @method findAll
@@ -56,10 +57,22 @@ function deleteById(_id) {
     return UserModel.deleteOne({ _id }).exec();
 }
 
+/**
+ * @exports
+ * @method multiply
+ * @param {a} number
+ * @param {b} number
+ * @returns {Number}
+ */
+function multiply(a, b) {
+    return a + b;
+}
+
 module.exports = {
     findAll,
     findById,
     create,
     updateById,
     deleteById,
+    multiply,
 };
