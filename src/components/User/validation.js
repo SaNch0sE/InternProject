@@ -16,6 +16,7 @@ class UserValidation extends Validation {
             .object({
                 id: this.Joi.objectId(),
             })
+            .unknown(true)
             .validate(data);
     }
 
@@ -31,10 +32,12 @@ class UserValidation extends Validation {
                 email: this.Joi.string().email(),
                 fullName: this.Joi
                     .string()
+                    .pattern(/^[a-zA-Z]+\s+[a-zA-Z]+$/)
                     .min(1)
                     .max(30)
                     .required(),
             })
+            .unknown(true)
             .validate(profile);
     }
 
@@ -50,10 +53,12 @@ class UserValidation extends Validation {
                 id: this.Joi.objectId(),
                 fullName: this.Joi
                     .string()
+                    .pattern(/^[a-zA-Z]+\s+[a-zA-Z]+$/)
                     .min(1)
                     .max(30)
                     .required(),
             })
+            .unknown(true)
             .validate(data);
     }
 
@@ -67,6 +72,7 @@ class UserValidation extends Validation {
             .object({
                 id: this.Joi.objectId(),
             })
+            .unknown(true)
             .validate(data);
     }
 }
