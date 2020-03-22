@@ -99,8 +99,8 @@ function signIn(profile, session) {
  * @summary delete a user from database
  * @returns {Promise<void>}
  */
-function logout(email, token) {
-    return AdminModel.updateOne({ email, token }, { session: 'logged out' }).exec();
+function logout(email, session) {
+    return AdminModel.updateOne({ email, session }, { session: 'logged out' }).exec();
 }
 
 module.exports = {

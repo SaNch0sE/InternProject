@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const jwt = require('./auth');
 const Service = require('./service');
 const UserValidation = require('./validation');
@@ -23,12 +24,12 @@ async function findAll(req, res, next) {
             });
         }
         if (verified.status === 1) {
-            const session = await Service.checkSession(verified.data.login, req.cookies.refresh);
+            const session = await Service.checkSession({ email: verified.email }.login, req.cookies.refresh);
             if (session === true) {
                 const options = { maxAge: accessTime.cookie, httpOnly: true };
-                res.cookie('access', jwt.getToken(verified.data.email, accessTime.jwt), options);
-                console.log('Access-token refreshed\n');
-                return res.redirect(307, '/');
+                const newt = jwt.getToken({ email: verified.email }, accessTime.jwt);
+                res.cookie('access', newt, options);
+                return res.redirect(308, '/');
             }
         }
         return res.status(400).json({
@@ -67,12 +68,12 @@ async function findById(req, res, next) {
             });
         }
         if (verified.status === 1) {
-            const session = await Service.checkSession(verified.data.login, req.cookies.refresh);
+            const session = await Service.checkSession({ email: verified.email }.login, req.cookies.refresh);
             if (session === true) {
                 const options = { maxAge: accessTime.cookie, httpOnly: true };
-                res.cookie('access', jwt.getToken(verified.data.email, accessTime.jwt), options);
-                console.log('Access-token refreshed\n');
-                return res.redirect(307, '/:id');
+                const newt = jwt.getToken({ email: verified.email }, accessTime.jwt);
+                res.cookie('access', newt, options);
+                return res.redirect(308, '/:id');
             }
         }
         return res.status(400).json({
@@ -123,12 +124,12 @@ async function create(req, res, next) {
             });
         }
         if (verified.status === 1) {
-            const session = await Service.checkSession(verified.data.login, req.cookies.refresh);
+            const session = await Service.checkSession({ email: verified.email }.login, req.cookies.refresh);
             if (session === true) {
                 const options = { maxAge: accessTime.cookie, httpOnly: true };
-                res.cookie('access', jwt.getToken(verified.data.email, accessTime.jwt), options);
-                console.log('Access-token refreshed\n');
-                return res.redirect(307, '/');
+                const newt = jwt.getToken({ email: verified.email }, accessTime.jwt);
+                res.cookie('access', newt, options);
+                return res.redirect(308, '/');
             }
         }
         return res.status(400).json({
@@ -174,12 +175,12 @@ async function updateById(req, res, next) {
             });
         }
         if (verified.status === 1) {
-            const session = await Service.checkSession(verified.data.login, req.cookies.refresh);
+            const session = await Service.checkSession({ email: verified.email }.login, req.cookies.refresh);
             if (session === true) {
                 const options = { maxAge: accessTime.cookie, httpOnly: true };
-                res.cookie('access', jwt.getToken(verified.data.email, accessTime.jwt), options);
-                console.log('Access-token refreshed\n');
-                return res.redirect(307, '/');
+                const newt = jwt.getToken({ email: verified.email }, accessTime.jwt);
+                res.cookie('access', newt, options);
+                return res.redirect(308, '/');
             }
         }
         return res.status(400).json({
@@ -225,12 +226,12 @@ async function deleteById(req, res, next) {
             });
         }
         if (verified.status === 1) {
-            const session = await Service.checkSession(verified.data.login, req.cookies.refresh);
+            const session = await Service.checkSession({ email: verified.email }.login, req.cookies.refresh);
             if (session === true) {
                 const options = { maxAge: accessTime.cookie, httpOnly: true };
-                res.cookie('access', jwt.getToken(verified.data.email, accessTime.jwt), options);
-                console.log('Access-token refreshed\n');
-                return res.redirect(307, '/');
+                const newt = jwt.getToken({ email: verified.email }, accessTime.jwt);
+                res.cookie('access', newt, options);
+                return res.redirect(308, '/');
             }
         }
         return res.status(400).json({
@@ -311,7 +312,7 @@ async function signIn(req, res, next) {
         }
 
         const data = { email: req.body.email, password: req.body.password };
-        const refresh = jwt.getToken({ email: req.body.email }, refreshTime.jwt);
+        const refresh = jwt.getToken({ email: data.email }, refreshTime.jwt);
 
         const updatedUser = await Service.signIn(data, refresh);
 
@@ -355,16 +356,19 @@ async function logout(req, res, next) {
     try {
         const verified = jwt.verify(req.cookies);
         if (verified.status === 0) {
-            const done = await Service.logout(verified.data.email, req.cookies.refresh);
+            const done = await Service.logout(verified.email, req.cookies.refresh);
+            const options = { maxAge: 0, httpOnly: true };
+            res.cookie('access', '', options);
+            res.cookie('refresh', '', options);
             return res.status(200).json({
                 data: done,
             });
         }
         if (verified.status === 1) {
             const options = { maxAge: accessTime.cookie, httpOnly: true };
-            res.cookie('access', jwt.getToken(verified.data.email, accessTime.jwt), options);
-            console.log('Access-token refreshed\n');
-            return res.redirect(307, '/logout');
+            const newt = jwt.getToken({ email: verified.email }, accessTime.jwt);
+            res.cookie('access', newt, options);
+            return res.redirect('/v1/users/logout');
         }
         return res.status(400).json({
             message: 'Auth error',
