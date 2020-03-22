@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config({ path: './.env' });
 
-const MONGODB_URI = 'mongodb://localhost:27017/';
+const MONGODB_URI = process.env.DB_HOST;
 const MONGODB_DB_MAIN = 'users_db';
 const MONGO_URI = `${MONGODB_URI}${MONGODB_DB_MAIN}`;
 

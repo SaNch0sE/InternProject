@@ -4,3 +4,4 @@ node_modules
 Lesson4.key
 package-lock.json
 screenshots
+.env

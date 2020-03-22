@@ -39,6 +39,36 @@ router.get('/:id', UserComponent.findById);
 router.post('/', UserComponent.create);
 
 /**
+ * Route serving auth of a user
+ * @name /v1/users
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.post('/login', UserComponent.signIn);
+
+/**
+ * Route serving logout of a user
+ * @name /v1/users
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.post('/logout', UserComponent.logout);
+
+/**
+ * Route serving a new user
+ * @name /v1/users
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.post('/signUp', UserComponent.create);
+
+/**
  * Route serving a new user
  * @name /v1/users
  * @function

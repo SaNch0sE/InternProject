@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "main": "./src/server/index.js",
     "scripts": {
-        "start": "node src/server/index.js",
+        "start": "nodemon src/server/index.js",
         "test": "npx mocha ./__test__ --exit "
     },
     "dependencies": {
@@ -15,7 +15,9 @@
         "connect-flash": "^0.1.1",
         "cookie-parser": "1.4.3",
         "cors": "2.8.5",
+        "crypto-js": "^4.0.0",
         "csurf": "^1.11.0",
+        "dotenv": "^8.2.0",
         "ejs": "^3.0.1",
         "eslint-config-airbnb": "18.0.1",
         "express": "4.16.2",

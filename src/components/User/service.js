@@ -68,6 +68,29 @@ function multiply(a, b) {
     return a + b;
 }
 
+/**
+ * @exports
+ * @method signIn
+ * @param {string} email
+ * @param {string} token
+ * @summary delete a user from database
+ * @returns {Promise<void>}
+ */
+function signIn(profile, token) {
+    return UserModel.updateOne(profile, { token }).exec();
+}
+
+/**
+ * @exports
+ * @method logout
+ * @param {string} email
+ * @summary delete a user from database
+ * @returns {Promise<void>}
+ */
+function logout(email, token) {
+    return UserModel.updateOne({ email, token }, { token: 'ntoken' }).exec();
+}
+
 module.exports = {
     findAll,
     findById,
@@ -75,4 +98,6 @@ module.exports = {
     updateById,
     deleteById,
     multiply,
+    signIn,
+    logout,
 };
