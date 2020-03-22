@@ -19,7 +19,7 @@ const router = Router();
 router.get('/', UserComponent.findAll);
 
 /**
- * Route serving a user
+ * Route finding a user by Id
  * @name /v1/users/:id
  * @function
  * @inner
@@ -39,7 +39,7 @@ router.get('/:id', UserComponent.findById);
 router.post('/', UserComponent.create);
 
 /**
- * Route serving auth of a user
+ * Route for auth of a admin
  * @name /v1/users
  * @function
  * @inner
@@ -49,7 +49,7 @@ router.post('/', UserComponent.create);
 router.post('/login', UserComponent.signIn);
 
 /**
- * Route serving logout of a user
+ * Route for logout admin
  * @name /v1/users
  * @function
  * @inner
@@ -59,17 +59,17 @@ router.post('/login', UserComponent.signIn);
 router.post('/logout', UserComponent.logout);
 
 /**
- * Route serving a new user
+ * Route serving a new admin
  * @name /v1/users
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/signUp', UserComponent.create);
+router.post('/signUp', UserComponent.signUp);
 
 /**
- * Route serving a new user
+ * Route for updating a user full name
  * @name /v1/users
  * @function
  * @inner
@@ -79,7 +79,7 @@ router.post('/signUp', UserComponent.create);
 router.put('/', UserComponent.updateById);
 
 /**
- * Route serving a new user
+ * Route for deleting a user
  * @name /v1/users
  * @function
  * @inner

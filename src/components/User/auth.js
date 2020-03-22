@@ -23,12 +23,12 @@ function verify(tokens) {
             const access = jwt.verify(tokens.access, process.env.KEY);
             if (access && refresh) {
                 // code "0" - OK, "1" - Access-token expired, "2" - All tokens expired
-                return { status: 0, data: access.data };
+                return { status: 0, data: access.email };
             }
         // if user has no access token but has refresh
         } catch (err) {
             console.error(`${err}\n`);
-            return { status: 1, data: refresh.data };
+            return { status: 1, data: refresh.email };
         }
     // else
     } catch (err) {

@@ -1,4 +1,5 @@
 const UserModel = require('./model');
+const AdminModel = require('./adminModel');
 
 /**
  * @exports
@@ -70,14 +71,25 @@ function multiply(a, b) {
 
 /**
  * @exports
+ * @method create
+ * @param {object} profile
+ * @summary create a new user
+ * @returns {Promise<UserModel>}
+ */
+function signUp(profile) {
+    return AdminModel.create(profile);
+}
+
+/**
+ * @exports
  * @method signIn
  * @param {string} email
  * @param {string} token
  * @summary delete a user from database
  * @returns {Promise<void>}
  */
-function signIn(profile, token) {
-    return UserModel.updateOne(profile, { token }).exec();
+function signIn(profile, session) {
+    return AdminModel.updateOne(profile, { session }).exec();
 }
 
 /**
@@ -88,7 +100,7 @@ function signIn(profile, token) {
  * @returns {Promise<void>}
  */
 function logout(email, token) {
-    return UserModel.updateOne({ email, token }, { token: 'ntoken' }).exec();
+    return AdminModel.updateOne({ email, token }, { session: 'logged out' }).exec();
 }
 
 module.exports = {
@@ -98,6 +110,7 @@ module.exports = {
     updateById,
     deleteById,
     multiply,
+    signUp,
     signIn,
     logout,
 };

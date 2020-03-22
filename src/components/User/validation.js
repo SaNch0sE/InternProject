@@ -35,7 +35,6 @@ class UserValidation extends Validation {
                     .max(30)
                     .required(),
                 password: this.Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,32}$')).required(),
-                repeat_password: this.Joi.ref('password'),
             })
             .validate(profile);
     }
@@ -68,6 +67,26 @@ class UserValidation extends Validation {
         return this.Joi
             .object({
                 id: this.Joi.objectId(),
+            })
+            .validate(data);
+    }
+
+    /**
+     * @param {String} data.id - objectId
+     * @returns
+     * @memberof UserValidation
+     */
+    signUp(data) {
+        return this.Joi
+            .object({
+                email: this.Joi.string().email().required(),
+                fullName: this.Joi
+                    .string()
+                    .min(1)
+                    .max(30)
+                    .required(),
+                password: this.Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,32}$')).required(),
+                repeat_password: this.Joi.ref('password'),
             })
             .validate(data);
     }
