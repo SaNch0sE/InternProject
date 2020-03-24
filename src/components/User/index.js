@@ -170,8 +170,13 @@ async function updateById(req, res, next) {
         const verified = jwt.verify(req.cookies);
         if (verified.status === 0) {
             const updatedUser = await Service.updateById(req.body.id, req.body);
+            if (updatedUser.nModified === 1) {
+                return res.status(200).json({
+                    data: { updated: true },
+                });
+            }
             return res.status(200).json({
-                data: updatedUser,
+                data: { updated: false },
             });
         }
         if (verified.status === 1) {
@@ -221,8 +226,13 @@ async function deleteById(req, res, next) {
         const verified = jwt.verify(req.cookies);
         if (verified.status === 0) {
             const deletedUser = await Service.deleteById(req.body.id);
+            if (deletedUser.deletedCount === 1) {
+                return res.status(200).json({
+                    data: { deleted: true },
+                });
+            }
             return res.status(200).json({
-                data: deletedUser,
+                data: { deleted: false, details: deletedUser },
             });
         }
         if (verified.status === 1) {
@@ -277,7 +287,10 @@ async function signUp(req, res, next) {
         };
         const newAdmin = await Service.signUp(admin);
         return res.status(200).json({
-            data: newAdmin,
+            data: {
+                _id: newAdmin._id,
+                email: newAdmin.email,
+            },
         });
     } catch (error) {
         if (error instanceof ValidationError) {
@@ -320,9 +333,7 @@ async function signIn(req, res, next) {
             const access = jwt.getToken({ email: req.body.email }, accessTime.jwt);
             res.cookie('access', access, { maxAge: accessTime.cookie, httpOnly: true });
             res.cookie('refresh', refresh, { maxAge: refreshTime.cookie, httpOnly: true });
-            return res.status(200).json({
-                updatedUser,
-            });
+            return res.status(200).json({ ok: true });
         }
         return res.status(200).json({
             message: 'Auth error',

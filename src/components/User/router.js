@@ -46,7 +46,7 @@ router.post('/', UserComponent.create);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/login', UserComponent.signIn);
+router.post('/signIn', UserComponent.signIn);
 
 /**
  * Route for logout admin
