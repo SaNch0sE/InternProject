@@ -22,6 +22,7 @@ class UserValidation extends Validation {
     /**
      * @param {String} profile.email
      * @param {String} profile.fullName
+     * @param {String} profile.password
      * @returns
      * @memberof UserValidation
      */
@@ -41,14 +42,15 @@ class UserValidation extends Validation {
 
     /**
      * @param {String} data.id - objectId
-     * @param {String} data.fullName
+     * @param {String} data.fullName - string
      * @returns
      * @memberof UserValidation
      */
     updateById(data) {
         return this.Joi
             .object({
-                id: this.Joi.objectId(),
+                id: this.Joi.objectId()
+                    .required(),
                 fullName: this.Joi
                     .string()
                     .min(1)
@@ -72,7 +74,10 @@ class UserValidation extends Validation {
     }
 
     /**
-     * @param {String} data.id - objectId
+     * @param {String} data.email - Email
+     * @param {String} data.fullName - Full name
+     * @param {String} data.password - Password
+     * @param {String} data.repeat_password - Repeated password
      * @returns
      * @memberof UserValidation
      */
@@ -92,7 +97,8 @@ class UserValidation extends Validation {
     }
 
     /**
-     * @param {String} data.id - objectId
+     * @param {String} data.email - Email
+     * @param {String} data.password - password
      * @returns
      * @memberof UserValidation
      */

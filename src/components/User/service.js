@@ -39,12 +39,12 @@ function create(profile) {
  * @exports
  * @method updateById
  * @param {string} _id
- * @param {object} newProfile
+ * @param {object} fullName(new)
  * @summary update a user's profile
  * @returns {Promise<void>}
  */
-function updateById(_id, newProfile) {
-    return UserModel.updateOne({ _id }, newProfile).exec();
+function updateById(_id, fullName) {
+    return UserModel.updateOne({ _id }, { fullName }).exec();
 }
 
 /**

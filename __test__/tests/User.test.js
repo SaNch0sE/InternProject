@@ -20,11 +20,21 @@ const userCreditionals = {
     password: pass,
     repeat_password: pass,
 };
+const BadUserCreditionals = {
+    fullName: 'TestTest',
+    email: `${crypto
+        .randomBytes(Math.ceil(8 / 2))
+        .toString('hex') // convert to hexadecimal format
+        .slice(0, 8)}test.com`,
+    password: pass,
+    repeat_password: pass,
+};
 let id;
 
 // Create test agent
 const agent = request.agent(server);
 
+// Correct api test
 describe('UserComponent -> controller', () => {
     // Signin Up
     it('UserComponent -> controller -> /v1/users/signUp', (done) => {
@@ -159,7 +169,124 @@ describe('UserComponent -> controller', () => {
             })
             .catch((err) => done(err));
     });
-    // Logout
+});
+
+// Validation error test
+describe('UserComponent -> controller -> Validation error', () => {
+    // Signin Up
+    it('UserComponent -> controller -> /v1/users/signUp', (done) => {
+        agent.post('/v1/users/signUp')
+            .set('Accept', 'application/json')
+            .send(BadUserCreditionals)
+            .expect('Content-Type', /json/)
+            .expect(422)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Signin In
+    it('UserComponent -> controller -> /v1/users/signIn', (done) => {
+        agent.post('/v1/users/signIn')
+            .set('Accept', 'application/json')
+            .send({
+                email: `${userCreditionals.email}XXX`,
+                password: userCreditionals.password,
+            })
+            .expect('Content-Type', /json/)
+            .expect(422)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Get one user
+    it('UserComponent -> controller -> /v1/users/ -> findById', (done) => {
+        agent
+            .get('/v1/users/xxxx')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(422)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Create new user
+    it('UserComponent -> controller -> /v1/users/ -> create', (done) => {
+        agent
+            .post('/v1/users/')
+            .set('Accept', 'application/json')
+            .send({
+                fullName: 1,
+                email: userCreditionals.email,
+                password: userCreditionals.password,
+            })
+            .expect('Content-Type', /json/)
+            .expect(422)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Update new user's info
+    it('UserComponent -> controller -> /v1/users/ -> updateById', (done) => {
+        agent
+            .put('/v1/users/')
+            .set('Accept', 'application/json')
+            .send({
+                id: 111,
+                fullName: `${userCreditionals.fullName}_UPDATED`,
+            })
+            .expect('Content-Type', /json/)
+            .expect(500)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Remove created user
+    it('UserComponent -> controller -> /v1/users/ -> removeById', (done) => {
+        agent
+            .delete('/v1/users/')
+            .set('Accept', 'application/json')
+            .send({
+                id: 222,
+            })
+            .expect('Content-Type', /json/)
+            .expect(500)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+});
+// Logout
+describe('UserComponent -> controller -> Logout', () => {
     it('UserComponent -> controller -> /v1/users/logout', (done) => {
         agent
             .post('/v1/users/logout')
@@ -170,6 +297,102 @@ describe('UserComponent -> controller', () => {
                 const expectBody = expect(res.body);
                 // Check response
                 expectBody.to.have.property('data').and.to.be.a('object');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+});
+
+// Auth error test
+describe('UserComponent -> controller -> Auth error test ', () => {
+    // Get all users
+    it('UserComponent -> controller -> /v1/users/ -> findAll', (done) => {
+        agent
+            .get('/v1/users/')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Get one user
+    it('UserComponent -> controller -> /v1/users/ -> findById', (done) => {
+        agent
+            .get(`/v1/users/${id}`)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Create new user
+    it('UserComponent -> controller -> /v1/users/ -> create', (done) => {
+        agent
+            .post('/v1/users/')
+            .set('Accept', 'application/json')
+            .send({
+                fullName: userCreditionals.fullName,
+                email: userCreditionals.email,
+                password: userCreditionals.password,
+            })
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Update new user's info
+    it('UserComponent -> controller -> /v1/users/ -> updateById', (done) => {
+        agent
+            .put('/v1/users/')
+            .set('Accept', 'application/json')
+            .send({
+                id,
+                fullName: `${userCreditionals.fullName}_UPDATED`,
+            })
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
+                done();
+            })
+            .catch((err) => done(err));
+    });
+    // Remove created user
+    it('UserComponent -> controller -> /v1/users/ -> removeById', (done) => {
+        agent
+            .delete('/v1/users/')
+            .set('Accept', 'application/json')
+            .send({
+                id,
+            })
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .then((res) => {
+                const expectBody = expect(res.body);
+                // Check response
+                expectBody.to.have.property('message');
+                expectBody.to.have.property('details');
                 done();
             })
             .catch((err) => done(err));

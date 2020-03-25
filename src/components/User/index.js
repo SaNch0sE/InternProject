@@ -32,13 +32,13 @@ async function findAll(req, res, next) {
                 return res.redirect(308, '/');
             }
         }
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Auth error',
             details: 'Please login first',
         });
     } catch (error) {
         res.status(500).json({
-            error: error.message,
+            message: error.message,
             details: null,
         });
 
@@ -76,14 +76,14 @@ async function findById(req, res, next) {
                 return res.redirect(308, '/:id');
             }
         }
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Auth error',
             details: 'Please login first',
         });
     } catch (error) {
         if (error instanceof ValidationError) {
             return res.status(422).json({
-                error: error.name,
+                message: error.name,
                 details: error.message,
             });
         }
@@ -132,7 +132,7 @@ async function create(req, res, next) {
                 return res.redirect(308, '/');
             }
         }
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Auth error',
             details: 'Please login first',
         });
@@ -169,7 +169,7 @@ async function updateById(req, res, next) {
         }
         const verified = jwt.verify(req.cookies);
         if (verified.status === 0) {
-            const updatedUser = await Service.updateById(req.body.id, req.body);
+            const updatedUser = await Service.updateById(req.body.id, req.body.fullName);
             if (updatedUser.nModified === 1) {
                 return res.status(200).json({
                     data: { updated: true },
@@ -188,7 +188,7 @@ async function updateById(req, res, next) {
                 return res.redirect(308, '/');
             }
         }
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Auth error',
             details: 'Please login first',
         });
@@ -244,7 +244,7 @@ async function deleteById(req, res, next) {
                 return res.redirect(308, '/');
             }
         }
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Auth error',
             details: 'Please login first',
         });
@@ -381,7 +381,7 @@ async function logout(req, res, next) {
             res.cookie('access', newt, options);
             return res.redirect('/v1/users/logout');
         }
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Auth error',
             details: 'Please login first',
         });
