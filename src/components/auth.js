@@ -27,12 +27,12 @@ function verify(tokens) {
             }
         // if user has no access token but has refresh
         } catch (err) {
-            console.error(`${err}\n`);
+            // console.log(`Error: ${err}`);
             return { status: 1, email: refresh.email };
         }
     // else
     } catch (err) {
-        console.error(`${err}\n`);
+        // console.log(`Error: ${err}`);
         return { status: 2 };
     }
     return true;

@@ -16,6 +16,7 @@ const connectOptions = {
     // parser if they find a bug in the new parse
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
 };
 
 module.exports = mongoose.createConnection(MONGO_URI, connectOptions);

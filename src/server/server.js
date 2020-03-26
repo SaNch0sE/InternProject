@@ -7,7 +7,6 @@ const routes = require('../config/router');
  * @constant {express.Application}
  */
 const app = express();
-
 /**
  * @description express.Application Middleware
  */

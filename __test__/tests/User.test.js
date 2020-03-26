@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const request = require('supertest');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -33,12 +32,10 @@ let id;
 
 // Create test agent
 const agent = request.agent(server);
-
-// Correct api test
-describe('UserComponent -> controller', () => {
+describe('AuthComponent -> controller', () => {
     // Signin Up
-    it('UserComponent -> controller -> /v1/users/signUp', (done) => {
-        agent.post('/v1/users/signUp')
+    it('AuthComponent -> controller -> /v1/users/auth/ -> signUp', (done) => {
+        agent.post('/v1/users/auth/signUp')
             .set('Accept', 'application/json')
             .send(userCreditionals)
             .expect('Content-Type', /json/)
@@ -56,8 +53,8 @@ describe('UserComponent -> controller', () => {
             .catch((err) => done(err));
     });
     // Signin In
-    it('UserComponent -> controller -> /v1/users/signIn', (done) => {
-        agent.post('/v1/users/signIn')
+    it('AuthComponent -> controller -> /v1/users/auth/ -> signIn', (done) => {
+        agent.post('/v1/users/auth/signIn')
             .set('Accept', 'application/json')
             .send({
                 email: userCreditionals.email,
@@ -76,6 +73,9 @@ describe('UserComponent -> controller', () => {
             })
             .catch((err) => done(err));
     });
+});
+// Correct api test
+describe('UserComponent -> controller', () => {
     // Get all users
     it('UserComponent -> controller -> /v1/users/ -> findAll', (done) => {
         agent
@@ -171,11 +171,10 @@ describe('UserComponent -> controller', () => {
     });
 });
 
-// Validation error test
-describe('UserComponent -> controller -> Validation error', () => {
+describe('AuthComponent -> controller -> Validation error', () => {
     // Signin Up
-    it('UserComponent -> controller -> /v1/users/signUp', (done) => {
-        agent.post('/v1/users/signUp')
+    it('AuthComponent -> controller -> /v1/users/auth/signUp', (done) => {
+        agent.post('/v1/users/auth/signUp')
             .set('Accept', 'application/json')
             .send(BadUserCreditionals)
             .expect('Content-Type', /json/)
@@ -190,8 +189,8 @@ describe('UserComponent -> controller -> Validation error', () => {
             .catch((err) => done(err));
     });
     // Signin In
-    it('UserComponent -> controller -> /v1/users/signIn', (done) => {
-        agent.post('/v1/users/signIn')
+    it('AuthComponent -> controller -> /v1/users/auth/signIn', (done) => {
+        agent.post('/v1/users/auth/signIn')
             .set('Accept', 'application/json')
             .send({
                 email: `${userCreditionals.email}XXX`,
@@ -208,6 +207,10 @@ describe('UserComponent -> controller -> Validation error', () => {
             })
             .catch((err) => done(err));
     });
+});
+
+// Validation error test
+describe('UserComponent -> controller -> Validation error', () => {
     // Get one user
     it('UserComponent -> controller -> /v1/users/ -> findById', (done) => {
         agent
@@ -286,10 +289,10 @@ describe('UserComponent -> controller -> Validation error', () => {
     });
 });
 // Logout
-describe('UserComponent -> controller -> Logout', () => {
-    it('UserComponent -> controller -> /v1/users/logout', (done) => {
+describe('AuthComponent -> controller -> Logout', () => {
+    it('AuthComponent -> controller -> /v1/users/auth/ -> logout', (done) => {
         agent
-            .post('/v1/users/logout')
+            .post('/v1/users/auth/logout')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
@@ -304,7 +307,7 @@ describe('UserComponent -> controller -> Logout', () => {
 });
 
 // Auth error test
-describe('UserComponent -> controller -> Auth error test ', () => {
+describe('UserComponent -> controller -> Auth error test\n', () => {
     // Get all users
     it('UserComponent -> controller -> /v1/users/ -> findAll', (done) => {
         agent

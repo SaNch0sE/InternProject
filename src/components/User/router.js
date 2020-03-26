@@ -39,36 +39,6 @@ router.get('/:id', UserComponent.findById);
 router.post('/', UserComponent.create);
 
 /**
- * Route for auth of a admin
- * @name /v1/users
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.post('/signIn', UserComponent.signIn);
-
-/**
- * Route for logout admin
- * @name /v1/users
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.post('/logout', UserComponent.logout);
-
-/**
- * Route serving a new admin
- * @name /v1/users
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.post('/signUp', UserComponent.signUp);
-
-/**
  * Route for updating a user full name
  * @name /v1/users
  * @function
