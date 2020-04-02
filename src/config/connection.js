@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-require('dotenv').config({ path: './.env' });
+require('dotenv').config();
 
-const MONGODB_URI = process.env.DB_HOST;
-const MONGODB_DB_MAIN = 'users_db';
-const MONGO_URI = `${MONGODB_URI}${MONGODB_DB_MAIN}`;
+const { MONGO_URI } = process.env;
 
 const connectOptions = {
     // automatically try to reconnect when it loses connection
@@ -16,7 +14,8 @@ const connectOptions = {
     // parser if they find a bug in the new parse
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
+    ssl: true,
+    dbName: 'Books',
 };
 
 module.exports = mongoose.createConnection(MONGO_URI, connectOptions);

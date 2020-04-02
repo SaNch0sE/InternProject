@@ -1,7 +1,5 @@
-node_modules
-.editorconfig
-.eslintrc.json
-Lesson4.key
-package-lock.json
-screenshots
+node_modules/
+.idea/
+.DS_STORE
 .env
+mongo.js
