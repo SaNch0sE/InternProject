@@ -1,21 +1,21 @@
-const express = require('express');
-const http = require('http');
-const BooksRouter = require('../components/Books/router');
+import * as express from 'express';
+import * as http from 'http';
+import BooksRouter from '../components/Books/router';
 
-module.exports = {
+export default class Router {
     /**
-     * @function
+     * @method
      * @param {express.Application} app
      * @summary init Application router
      * @returns void
      */
-    init(app) {
+    static init(app: express.Application): void {
         const router = express.Router();
 
         /**
          * Forwards any requests to the /v1/books URI to BooksRouter.
          * @name /v1/books
-         * @function
+         * @method
          * @inner
          * @param {string} path - Express path
          * @param {callback} middleware - Express middleware.
@@ -24,7 +24,7 @@ module.exports = {
 
         /**
          * @description No results returned mean the object is not found
-         * @function
+         * @method
          * @inner
          * @param {callback} middleware - Express middleware.
          */
@@ -33,10 +33,10 @@ module.exports = {
         });
 
         /**
-         * @function
+         * @method
          * @inner
          * @param {express.Router}
          */
         app.use(router);
-    },
-};
+    }
+}

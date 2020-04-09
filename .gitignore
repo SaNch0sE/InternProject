@@ -1,5 +1,5 @@
 node_modules/
 .idea/
+build/
 .DS_STORE
 .env
-mongo.js
