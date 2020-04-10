@@ -11,7 +11,7 @@ class Router {
     private readonly router: ERouter = ERouter();
 
     constructor() {
-        const router = ERouter();
+        const router: ERouter = ERouter();
         /**
          * Route serving list of books.
          * @name /v1/books

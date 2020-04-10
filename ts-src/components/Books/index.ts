@@ -1,8 +1,7 @@
+import * as path from 'path';
 import BookServices from './service';
 import ISchema from '../interfaces/IScema';
 import IResponse from '../interfaces/IResponse';
-
-import path = require('path');
 
 class BooksComponent {
     /**
