@@ -8,14 +8,7 @@ class BookServices {
      * @returns {any}
      */
     public async getChartData(): Promise<ISchema[]> {
-        return Books.find({}, {
-            title: 0,
-            titleLength: 0,
-            description: 0,
-            code3: 1,
-            createdAt: 0,
-            updatedAt: 0,
-        });
+        return Books.find({}).select({ code3: 1 });
     }
 }
 

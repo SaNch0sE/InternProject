@@ -2,6 +2,8 @@ import BookServices from './service';
 import ISchema from '../interfaces/IScema';
 import IResponse from '../interfaces/IResponse';
 
+import path = require('path');
+
 class BooksComponent {
     /**
      * @method
@@ -43,7 +45,7 @@ class BooksComponent {
      */
     public async page(req, res, next): Promise<Express.Response> {
         try {
-            return res.sendFile('index');
+            return res.sendFile(path.resolve('public/index.html'));
         } catch (error) {
             res.status(500).send(`message: ${error.name},\n
             details: ${error.message}`);

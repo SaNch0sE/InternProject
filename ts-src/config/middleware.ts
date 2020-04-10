@@ -4,6 +4,8 @@ import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import * as express from 'express';
+import * as path from 'path';
+
 
 export default class Middleware {
     /**
@@ -13,7 +15,6 @@ export default class Middleware {
      * @returns void
      */
     static init(app: express.Application): void {
-        app.use(express.static('public'));
         app.use(
             bodyParser.urlencoded({
                 extended: true,

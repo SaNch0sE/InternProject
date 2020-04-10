@@ -1,12 +1,6 @@
 import * as http from 'http';
-import { AddressInfo } from 'net';
 
 class Events {
-    // Dummy address for this.address()
-    address(): AddressInfo {
-        return { address: 'dummy', port: 2, family: '' };
-    }
-
     /**
      * @method
      * @param  {NodeJS.ErrnoException} error
@@ -37,8 +31,8 @@ class Events {
      * @inner
      * @description log port to console
      */
-    onListening(): void {
-        const bindPort: string = typeof this.address() === 'string' ? `pipe ${this.address()}` : `port ${this.address().port}`;
+    onListening(address): void {
+        const bindPort: string = typeof address === 'string' ? `pipe ${address}` : `port ${address.port}`;
         console.log(`Listening on ${bindPort}`);
     }
 
@@ -50,7 +44,7 @@ class Events {
      */
     bind(Server: http.Server, port: number): void {
         Server.on('error', (error) => this.onError(error, port));
-        Server.on('listening', this.onListening.bind(Server, port));
+        Server.on('listening', this.onListening.bind(Server, Server.address()));
     }
 }
 
