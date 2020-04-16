@@ -19,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "connect": "^3.7.0",
+    "cors": "^2.8.5",
     "harmon": "^1.4.4",
     "http": "0.0.1-security",
     "http-proxy": "^1.18.0",

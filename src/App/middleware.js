@@ -3,6 +3,23 @@ const url = require('url');
 
 const proxy = httpProxy.createProxyServer({});
 
+proxy.once('proxyReq', (proxyReq, req, res) => {
+    proxyReq.setHeader('Access-Control-Allow-Origin', '*');
+    let bodyData;
+    if (proxyReq.getHeader('Content-Type') === 'application/json; charset=UTF-8') {
+        bodyData = JSON.stringify(req.body);
+    }
+    if (bodyData) {
+        proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+        proxyReq.write(bodyData);
+        proxyReq.end();
+    }
+});
+
+proxy.on('proxyRes', (proxyRes, req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+});
+
 function middleware(req, res) {
     let uri;
     try {
@@ -14,19 +31,14 @@ function middleware(req, res) {
         changeOrigin: true,
         target: uri,
         headers: {
+            'Access-Control-Allow-Origin': '*',
             'Cache-Control': 'no-cache',
         },
+        secure: true,
+        followRedirects: true,
     };
     console.log(`loading ${uri}`);
-    return proxy.web(req, res, options);
+    proxy.web(req, res, options);
 }
-
-proxy.on('error', (err, req, res) => {
-    res.writeHead(500, {
-        'Content-Type': 'text/plain',
-    });
-
-    res.end(`Something went wrong. And we are reporting a custom error message.\n${err}`);
-});
 
 module.exports = middleware;
