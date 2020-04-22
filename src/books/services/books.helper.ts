@@ -8,7 +8,7 @@ export class Helper {
         this.books = books;
     }
 
-    getBooks() {
+    getBooks(): IResponse[] {
         try {
             const books: Books[] = this.books;
             const map: Map<string, number> = new Map();
