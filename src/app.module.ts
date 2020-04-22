@@ -1,10 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
+import { TypeOrmModule } from '@nestjs/typeorm';
+import 'dotenv/config';
+import { BooksModule } from './books/books.module';
+import { UsersModule } from './users/users.module';
+import { Users } from './users/users.entity';
+import { Books } from './books/books.entity';
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mongodb',
+      url: process.env.MONGO_URI,
+      database: 'Books',
+      entities: [Books, Users],
+      logging: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }),
+    BooksModule,
+    UsersModule,
+  ],
 })
 export class AppModule {}
