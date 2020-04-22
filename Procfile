@@ -1,0 +1,1 @@
+web: npx nest start
