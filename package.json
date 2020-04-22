@@ -6,9 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start": "npm start start:prod",
-    "start:dev": "nest start --watch",
-    "start:prod": "node dist/src/main.js"
+    "start": "node dist/src/main.js"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
