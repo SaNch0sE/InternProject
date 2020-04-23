@@ -10,7 +10,7 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: true,
     forbidUnknownValues: true,
-    skipMissingProperties: false,
+    skipMissingProperties: false
   }));
   // sets secure headers globally
   app.use(helmet());
