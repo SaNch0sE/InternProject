@@ -5,6 +5,7 @@ import {
     IsString,
     MinLength,
     MaxLength,
+    ValidateNested,
 } from 'class-validator';
 import { PublishedDto } from './published.dto';
 
@@ -25,6 +26,8 @@ export class BookDto {
     @MaxLength(30)
     readonly author: string;
 
+    @IsNotEmpty()
+    @ValidateNested({ each: true })
     @Type(() => PublishedDto)
     readonly published: PublishedDto[];
 }
