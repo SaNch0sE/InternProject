@@ -9,7 +9,7 @@ import { Books } from './books/books.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: process.env.MONGO_URI,
+      url: process.env.MURL || process.env.MONGO_URI,
       database: 'Books',
       entities: [Books, Users],
       logging: true,
