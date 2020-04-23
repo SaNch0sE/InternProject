@@ -1,16 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectID, } from 'typeorm';
+import { PublishedDto } from './dto/published.dto';
 
 @Entity('books')
 export class Books {
-  @PrimaryGeneratedColumn() id: number;
+  @ObjectIdColumn() id: ObjectID;
 
-  @Column('text') code3: string;
+  @Column() blogpost: number;
 
-  @Column('text') title: string;
+  @Column() title: string;
 
-  @Column('text') description: string;
+  @Column() author: string;
 
-  @Column('int') createdAt: number;
-
-  @Column('int') updatedAt: number;
+  @Column() published: PublishedDto[];
 }

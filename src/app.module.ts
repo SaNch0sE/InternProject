@@ -14,7 +14,8 @@ import { Books } from './books/books.entity';
       entities: [Books, Users],
       logging: true,
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      synchronize: true,
     }),
     BooksModule,
     UsersModule,
